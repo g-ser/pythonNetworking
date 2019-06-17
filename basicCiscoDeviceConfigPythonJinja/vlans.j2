@@ -1,0 +1,8 @@
+{% set configured_vlans = [] %}
+{% for interface in interface_list %}
+ {% if ((interface.get('vlan') != None) and (interface.get('vlan') not in configured_vlans)) %}
+vlan {{interface.get('vlan')}}
+name VLAN{{interface.get('vlan')}}
+ {% endif %}
+ {% do configured_vlans.append(interface.get('vlan')) %}
+{% endfor %}

@@ -1,0 +1,12 @@
+{% for interface in interface_list %}
+interface {{ interface.name }}
+  description {{ interface.desc|upper }}
+  {# interface.name is the argument of the get_interface_speed function #}
+  speed {{interface.name|get_interface_speed}}
+ {% if interface.get('uplink') %}
+  switchport mode trunk
+ {% else %}
+  switchport access vlan {{ interface.vlan }}
+  switchport mode access
+ {% endif %}
+{% endfor %}
